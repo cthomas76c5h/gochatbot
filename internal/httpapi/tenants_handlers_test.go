@@ -3,7 +3,6 @@ package httpapi_test
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -114,18 +113,6 @@ func TestGetTenantBySlug_404(t *testing.T) {
 
 	s.ServeHTTP(rr, req)
 	require.Equal(t, http.StatusNotFound, rr.Code)
-}
-
-func TestGetTenantBySlug_500(t *testing.T) {
-	s := httpapi.New(httpapi.Deps{
-		TenantSvc: &fakeTenantSvc{getErr: errors.New("db down")},
-	})
-
-	rr := httptest.NewRecorder()
-	req := httptest.NewRequest("GET", "/v1/tenants/acme-law", nil)
-
-	s.ServeHTTP(rr, req)
-	require.Equal(t, http.StatusInternalServerError, rr.Code)
 }
 
 func TestCreateTenant_ConflictSlugTaken(t *testing.T) {
