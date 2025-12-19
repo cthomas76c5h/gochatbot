@@ -7,7 +7,8 @@ import (
 )
 
 type Deps struct {
-	TenantSvc TenantService
+	TenantSvc   TenantService
+	TemplateSvc TemplateService
 }
 
 type Server struct {
@@ -26,6 +27,20 @@ func New(deps Deps) *Server {
 			r.Get("/", s.handleListTenants)
 			r.Post("/", s.handleCreateTenant)
 			r.Get("/{slug}", s.handleGetTenantBySlug)
+		})
+
+		r.Route("/tenants/{tenantSlug}", func(r chi.Router) {
+			r.Route("/templates", func(r chi.Router) {
+				r.Get("/", s.handleListTemplates)
+				r.Post("/", s.handleCreateTemplate)
+				r.Get("/{templateSlug}", s.handleGetTemplateBySlug)
+			})
+		})
+
+		r.Route("/templates/{templateID}", func(r chi.Router) {
+			r.Post("/drafts", s.handleCreateDraft)
+			r.Post("/publish", s.handlePublish)
+			r.Get("/published", s.handleGetPublished)
 		})
 	})
 

@@ -3,11 +3,9 @@ package repo
 import (
 	"context"
 	"errors"
-	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgconn"
 
 	"gochatbot/internal/domain"
 	"gochatbot/internal/pagination"
@@ -120,11 +118,4 @@ func (r *TenantRepo) List(ctx context.Context, limit int, cursor *pagination.Cur
 	return items, nil, nil
 }
 
-func isUniqueViolation(err error) bool {
-	var pgErr *pgconn.PgError
-	if errors.As(err, &pgErr) {
-		// 23505 = unique_violation
-		return strings.TrimSpace(pgErr.Code) == "23505"
-	}
-	return false
-}
+

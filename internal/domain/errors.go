@@ -16,4 +16,14 @@ var (
 	ErrInvalidCursor           = errors.New("invalid cursor")
 	ErrTenantNotFound          = errors.New("tenant not found")
 	ErrTenantSlugTaken         = errors.New("tenant slug taken")
+
+	// Templates
+	ErrTemplateNotFound  = errors.New("template not found")
+	ErrTemplateSlugTaken = errors.New("template slug taken")
+	ErrTemplateImmutable = errors.New("template immutable")
+
+	// Template Versions
+	ErrVersionNotFound           = errors.New("version not found")
+	ErrVersionAlreadyPublished   = errors.New("version already published")
+	ErrPublishedVersionImmutable = errors.New("published version immutable")
 )

@@ -118,7 +118,7 @@ func TestGetTenantBySlug_404(t *testing.T) {
 
 func TestGetTenantBySlug_500(t *testing.T) {
 	s := httpapi.New(httpapi.Deps{
-		TenantSvc: &fakeTenantSvc{getErr: errors.New("db exploded")},
+		TenantSvc: &fakeTenantSvc{getErr: errors.New("db down")},
 	})
 
 	rr := httptest.NewRecorder()

@@ -27,8 +27,12 @@ func main() {
 	tenantRepo := repo.NewTenantRepo(conn)
 	tenantSvc := service.NewTenantService(tenantRepo)
 
+	templateRepo := repo.NewTemplateRepo(conn)
+	templateSvc := service.NewTemplateService(templateRepo)
+
 	s := httpapi.New(httpapi.Deps{
-		TenantSvc: tenantSvc,
+		TenantSvc:   tenantSvc,
+		TemplateSvc: templateSvc,
 	})
 
 	log.Printf("listening on %s", addr)
